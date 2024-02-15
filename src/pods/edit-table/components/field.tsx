@@ -3,7 +3,12 @@ import classes from '../edit-table.module.css';
 
 import { Reorder, motion, useDragControls } from 'framer-motion';
 import { Commands } from './commands/commands.component';
-import { RightArrowIcon, ExpandDown, DragDropIcon } from '@/common/components';
+import {
+  RightArrowIcon,
+  ExpandDown,
+  DragDropIcon,
+  Checkbox,
+} from '@/common/components';
 import { FieldVm, fieldTypeOptions } from '../edit-table.vm';
 import { NestedFieldGrid } from './nested-field-grid';
 import { FieldType, GUID } from '@/core/model';
@@ -72,6 +77,10 @@ export const Field: React.FC<Props> = props => {
       toggleExpand(field.id);
     }
     e.currentTarget.style.cursor = 'grabbing';
+  };
+
+  const handleOnchange = () => {
+    updateFieldValue(field, 'isArray', !field.isArray);
   };
 
   return (
@@ -164,21 +173,11 @@ export const Field: React.FC<Props> = props => {
           </select>
         </div>
         <div className={classes.fieldCell}>
-          <div className="checkbox">
-            <input
-              id="check3"
-              type="checkbox"
-              checked={field.isArray}
-              onChange={() =>
-                updateFieldValue(field, 'isArray', !field.isArray)
-              }
-            />
-            <label htmlFor="check3">
-              <svg viewBox="0,0,50,50">
-                <path d="M5 30 L 20 45 L 45 5"></path>
-              </svg>
-            </label>
-          </div>
+          <Checkbox
+            id="check3"
+            checked={false}
+            onChange={handleOnchange}
+          ></Checkbox>
         </div>
         <div className={classes.fieldCell}>
           <div className="checkbox">
